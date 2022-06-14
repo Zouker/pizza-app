@@ -1,4 +1,4 @@
-export function Sort() {
+export const Sort = () => {
     return (
         <div className="sort">
             <div className="sort__label">

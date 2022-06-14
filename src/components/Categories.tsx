@@ -1,4 +1,4 @@
-export function Categories() {
+export const Categories = () => {
     return (
         <div className="categories">
             <ul>
