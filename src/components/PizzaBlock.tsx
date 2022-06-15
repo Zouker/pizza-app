@@ -23,12 +23,16 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType> = ({title, price, imageUr
             <h4 className=" pizza-block__title">{title}</h4>
             <div className=" pizza-block__selector">
                 <ul>
-                    {types.map((typeId) => <li onClick={() => {
-                        setActiveType(typeId)
-                    }} className={activeType === typeId ? 'active' : ''}>{typeNames[typeId]}</li>)}
+                    {types.map((typeId) =>
+                        <li
+                            key={typeId}
+                            onClick={() =>
+                                setActiveType(typeId)}
+                            className={activeType === typeId ? 'active' : ''}>
+                            {typeNames[typeId]}</li>)}
                 </ul>
                 <ul>
-                    {sizes.map((size, index) => <li onClick={() => {
+                    {sizes.map((size, index) => <li key={size} onClick={() => {
                         setActiveSize(index)
                     }} className={activeSize === index ? 'active' : ''}>{size} см.</li>)}
                 </ul>
