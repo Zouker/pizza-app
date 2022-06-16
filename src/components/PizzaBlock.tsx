@@ -1,14 +1,17 @@
 import React from 'react'
 
-type PizzaBlockPropsType = {
+export type itemsType = {
+    id: number
     title: string
     price: number
     imageUrl: string
     sizes: number[]
     types: number[]
+    category: number
+    rating: number
 }
 
-export const PizzaBlock: React.FC<PizzaBlockPropsType> = ({title, price, imageUrl, sizes, types}) => {
+export const PizzaBlock: React.FC<itemsType> = ({title, price, imageUrl, sizes, types}) => {
     const [activeSize, setActiveSize] = React.useState(0)
     const [activeType, setActiveType] = React.useState(0)
 
