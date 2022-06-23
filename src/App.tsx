@@ -6,19 +6,27 @@ import {Home} from './pages/Home';
 import {NotFound} from './pages/NotFound';
 import {Cart} from './pages/Cart';
 
+type SearchContextType = {
+    searchValue: string
+    setSearchValue: (searchValue: string) => void
+}
+
+export const SearchContext = React.createContext({} as SearchContextType);
+
 const App = () => {
-const [searchValue, setSearchValue] = React.useState('')
-    console.log(searchValue, 'INPUT CHANGED')
+    const [searchValue, setSearchValue] = React.useState<string>('')
     return (
         <div className="wrapper">
-            <Header searchValue={searchValue} setSearchValue={setSearchValue}/>
-            <div className="content">
+            <SearchContext.Provider value={{searchValue, setSearchValue}}>
+                <Header/>
+                <div className="content">
                     <Routes>
-                        <Route path={'/'} element={<Home searchValue={searchValue}/>}/>
+                        <Route path={'/'} element={<Home/>}/>
                         <Route path={'/cart'} element={<Cart/>}/>
                         <Route path={'*'} element={<NotFound/>}/>
                     </Routes>
-            </div>
+                </div>
+            </SearchContext.Provider>
         </div>
     );
 }

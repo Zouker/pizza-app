@@ -4,12 +4,10 @@ import {Sort} from '../components/Sort';
 import {Skeleton} from '../components/PizzaBlock/Skeleton';
 import {itemsType, PizzaBlock} from '../components/PizzaBlock/PizzaBlock';
 import {Pagination} from '../components/Pagination/Pagination';
+import {SearchContext} from '../App';
 
-type HomePropsType = {
-    searchValue: string
-}
-
-export const Home: React.FC<HomePropsType> = ({searchValue}) => {
+export const Home = () => {
+    const {searchValue} = React.useContext(SearchContext)
     const [items, setItems] = React.useState<itemsType[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const [categoryId, setCategoryId] = React.useState(0)
@@ -51,7 +49,7 @@ export const Home: React.FC<HomePropsType> = ({searchValue}) => {
             <div className="content__items">
                 {isLoading ? skeletons : pizzas}
             </div>
-            <Pagination onChangePage={(number)=>setCurrentPage((number))}/>
+            <Pagination onChangePage={(number) => setCurrentPage((number))}/>
         </div>
     );
 };
