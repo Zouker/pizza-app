@@ -15,6 +15,7 @@ export const sortList = [
 export const Sort = React.memo(() => {
     const dispatch = useDispatch()
     const sort = useSelector<RootState, { name: string, sortProperty: string }>(state => state.filter.sort)
+    const sortRef: any = React.useRef()
 
     const [open, setOpen] = React.useState(false)
 
@@ -23,8 +24,20 @@ export const Sort = React.memo(() => {
         setOpen(false)
     }
 
+    React.useEffect(() => {
+        const handleClickOutside = (event: any) => {
+            if (!event.path.includes(sortRef.current)) {
+                setOpen(false)
+            }
+        }
+
+        document.body.addEventListener('click', handleClickOutside)
+
+        return () => document.body.removeEventListener('click', handleClickOutside)
+    }, [])
+
     return (
-        <div className="sort">
+        <div ref={sortRef} className="sort">
             <div className="sort__label">
                 <svg
                     width="10"

@@ -11,6 +11,16 @@ type SearchContextType = {
     setSearchValue: (searchValue: string) => void
 }
 
+// export type CartItemPropsType = {
+//     id: string,
+//     title: string,
+//     type: string,
+//     size: number,
+//     price: number,
+//     count: number
+//     imageUrl: string,
+// }
+
 export const SearchContext = React.createContext({} as SearchContextType);
 
 const App = () => {

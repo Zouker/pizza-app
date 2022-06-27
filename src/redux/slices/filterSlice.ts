@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-export interface FilterState {
+export type FilterState = {
     categoryId: number
     currentPage: number
     sort: {
@@ -18,7 +18,7 @@ const initialState: FilterState = {
     }
 }
 
-export const filterSlice = createSlice({
+const filterSlice = createSlice({
     name: 'filters',
     initialState,
     reducers: {
