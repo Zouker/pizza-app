@@ -1,5 +1,5 @@
 import React from 'react'
-import {addItem} from '../../redux/slices/cartSlice';
+import {addItem, selectCartItemById} from '../../redux/slices/cartSlice';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 
 export type itemsType = {
@@ -17,7 +17,7 @@ const typeNames = ['тонкое', 'традиционное']
 
 export const PizzaBlock: React.FC<itemsType> = ({id, title, price, imageUrl, sizes, types}) => {
     const dispatch = useAppDispatch()
-    const cartItem = useAppSelector(state => state.cart.items.find(obj => obj.id === id))
+    const cartItem = useAppSelector(selectCartItemById(id))
     const [activeSize, setActiveSize] = React.useState(0)
     const [activeType, setActiveType] = React.useState(0)
 

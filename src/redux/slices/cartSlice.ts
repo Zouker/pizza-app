@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {itemsType} from '../../components/PizzaBlock/PizzaBlock';
+import {RootState} from '../store';
 
 export type CartState = {
     totalPrice: number
@@ -30,7 +31,7 @@ const cartSlice = createSlice({
                 return (obj.price * obj.count) + sum
             }, 0)
         },
-        minusItem(state,action){
+        minusItem(state, action) {
             const findItem = state.items.find(obj => obj.id === action.payload)
             if (findItem) {
                 findItem.count--
@@ -45,6 +46,9 @@ const cartSlice = createSlice({
         }
     },
 });
+
+export const selectCart = (state: RootState) => state.cart;
+export const selectCartItemById = (id: number) => (state:RootState) => state.cart.items.find(obj => obj.id === id)
 
 export const {addItem, removeItem, minusItem, clearItems} = cartSlice.actions
 
