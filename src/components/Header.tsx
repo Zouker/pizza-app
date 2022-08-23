@@ -1,11 +1,14 @@
 import logoSvg from '../assets/img/pizza-logo.svg'
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {Search} from './Search/Search';
 import {useAppSelector} from '../redux/store';
 import {selectCart} from '../redux/slices/cartSlice';
 
 export const Header = () => {
     const {items, totalPrice} = useAppSelector(selectCart)
+    const location = useLocation()
+
+    console.log(location, window.location)
 
     const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
@@ -23,6 +26,7 @@ export const Header = () => {
                 </Link>
                 <Search/>
                 <div className="header__cart">
+                {location.pathname !== '/cart' && (
                     <Link to="/cart" className="button button--cart">
                         <span>{totalPrice}</span>
                         <div className="button__delimiter"></div>
@@ -57,6 +61,7 @@ export const Header = () => {
                         </svg>
                         <span>{totalCount}</span>
                     </Link>
+                    )}
                 </div>
             </div>
         </div>
