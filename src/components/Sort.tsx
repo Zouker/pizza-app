@@ -1,32 +1,37 @@
 import React from 'react'
-import {useDispatch} from 'react-redux';
-import {useAppSelector} from '../redux/store';
-import {selectSort, setSort} from '../redux/slices/filterSlice';
+import {useAppDispatch, useAppSelector} from '../redux/store';
+import {selectSort, setSort, Sort, SortPropertyEnum} from '../redux/slices/filterSlice';
 
-export const sortList = [
-    {name: 'популярности (DESC)', sortProperty: 'rating'},
-    {name: 'популярности (ASC)', sortProperty: '-rating'},
-    {name: 'цене (DESC)', sortProperty: 'price'},
-    {name: 'цене (ASC)', sortProperty: '-price'},
-    {name: 'алфавиту (DESC)', sortProperty: 'title'},
-    {name: 'алфавиту (ASC)', sortProperty: '-title'},
+type PopupClick = MouseEvent & {
+    path: Node[]
+}
+
+export const sortList: Sort[] = [
+    {name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC},
+    {name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC},
+    {name: 'цене (DESC)', sortProperty: SortPropertyEnum.PRICE_DESC},
+    {name: 'цене (ASC)', sortProperty: SortPropertyEnum.PRICE_ASC},
+    {name: 'алфавиту (DESC)', sortProperty: SortPropertyEnum.TITLE_DESC},
+    {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC},
 ]
 
-export const Sort = React.memo(() => {
-    const dispatch = useDispatch()
+export const SortPopup = React.memo(() => {
+    const dispatch = useAppDispatch()
     const sort = useAppSelector(selectSort)
-    const sortRef: any = React.useRef()
+    const sortRef = React.useRef<HTMLDivElement>(null)
 
     const [open, setOpen] = React.useState(false)
 
-    const onClickListItem = (obj: { name: string, sortProperty: string }) => {
+    const onClickListItem = (obj: Sort) => {
         dispatch(setSort(obj))
         setOpen(false)
     }
 
     React.useEffect(() => {
-        const handleClickOutside = (event: any) => {
-            if (!event.path.includes(sortRef.current)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as PopupClick;
+
+            if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setOpen(false)
             }
         }

@@ -1,48 +1,69 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {itemsType} from '../../components/PizzaBlock/PizzaBlock';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import axios from 'axios';
 import {RootState} from '../store';
 
-export type PizzaState = {
-    items: itemsType[]
-    status: 'loading' | 'success' | 'error'
+type Pizza = {
+    id: string
+    title: string
+    price: number
+    imageUrl: string
+    sizes: number[]
+    types: number[]
+    rating: number
 }
 
-export const fetchPizzas = createAsyncThunk('pizza/fetchPizzasStatus', async (params: any, thunkAPI) => {
+export enum Status {
+    LOADING = 'loading',
+    SUCCESS = 'success',
+    ERROR = 'error',
+}
+
+interface PizzaSliceState {
+    items: Pizza[]
+    status: Status
+}
+
+const initialState: PizzaSliceState = {
+    items: [],
+    status: Status.LOADING
+}
+
+export type SearchPizzaParams = {
+    sortBy: string,
+    order: string,
+    category: string,
+    search: string,
+    currentPage: string
+}
+
+export const fetchPizzas = createAsyncThunk<Pizza[], SearchPizzaParams>('pizza/fetchPizzasStatus', async (params) => {
     const {order, sortBy, category, search, currentPage} = params
-    const {data} = await axios.get(`https://62aa3fdb3b3143855444bb5b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
+    const {data} = await axios.get<Pizza[]>(`https://62aa3fdb3b3143855444bb5b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`);
     return data
 });
-
-const initialState: PizzaState = {
-    items: [],
-    status: 'loading'
-}
 
 const pizzaSlice = createSlice({
     name: 'pizza',
     initialState,
     reducers: {
-        setItems(state, action) {
+        setItems(state, action: PayloadAction<Pizza[]>) {
             state.items = action.payload;
         }
     },
-    extraReducers: {
-        [fetchPizzas.pending.toString()]: (state) => {
-            state.status = 'loading';
+    extraReducers: (builder) => {
+        builder.addCase(fetchPizzas.pending, (state) => {
+            state.status = Status.LOADING;
             state.items = [];
-        },
-        [fetchPizzas.fulfilled.toString()]: (state, action) => {
-            console.log(action, 'fulfilled')
+        });
+        builder.addCase(fetchPizzas.fulfilled, (state, action) => {
             state.items = action.payload;
-            state.status = 'success';
-        },
-        [fetchPizzas.rejected.toString()]: (state, action) => {
-            console.log(action, 'rejected')
-            state.status = 'error';
+            state.status = Status.SUCCESS;
+        });
+        builder.addCase(fetchPizzas.rejected, (state) => {
+            state.status = Status.ERROR;
             state.items = [];
-        },
-    }
+        });
+    },
 });
 
 export const selectPizzaData = (state: RootState) => state.pizza

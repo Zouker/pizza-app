@@ -1,21 +1,28 @@
 import React from 'react'
-import {addItem, selectCartItemById} from '../../redux/slices/cartSlice';
+import {addItem, CartItem, selectCartItemById} from '../../redux/slices/cartSlice';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {Link} from 'react-router-dom';
 
-export type itemsType = {
-    id: number
+export type PizzaBlockProps = {
+    id: string
     title: string
     price: number
     imageUrl: string
     sizes: number[]
     types: number[]
-    category: number
     rating: number
-    count: number
 }
+
 const typeNames = ['тонкое', 'традиционное']
 
-export const PizzaBlock: React.FC<itemsType> = ({id, title, price, imageUrl, sizes, types}) => {
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
+                                                          id,
+                                                          title,
+                                                          price,
+                                                          imageUrl,
+                                                          sizes,
+                                                          types,
+                                                      }) => {
     const dispatch = useAppDispatch()
     const cartItem = useAppSelector(selectCartItemById(id))
     const [activeSize, setActiveSize] = React.useState(0)
@@ -24,13 +31,14 @@ export const PizzaBlock: React.FC<itemsType> = ({id, title, price, imageUrl, siz
     const addedCount = cartItem ? cartItem.count : 0
 
     const onClickAdd = () => {
-        const item = {
+        const item: CartItem = {
             id,
             title,
             price,
             imageUrl,
             type: typeNames[activeType],
             size: sizes[activeSize],
+            count: 0,
         };
         dispatch(addItem(item))
     }
@@ -38,11 +46,13 @@ export const PizzaBlock: React.FC<itemsType> = ({id, title, price, imageUrl, siz
     return (
         <div className="pizza-block-wrapper">
             <div className="pizza-block">
-                <img className="pizza-block__image"
-                     src={imageUrl}
-                     alt=" Pizza"
-                />
-                <h4 className=" pizza-block__title">{title}</h4>
+                <Link key={id} to={`/pizza/${id}`}>
+                    <img className="pizza-block__image"
+                         src={imageUrl}
+                         alt=" Pizza"
+                    />
+                    <h4 className=" pizza-block__title">{title}</h4>
+                </Link>
                 <div className=" pizza-block__selector">
                     <ul>
                         {types.map((typeId) =>
@@ -56,12 +66,14 @@ export const PizzaBlock: React.FC<itemsType> = ({id, title, price, imageUrl, siz
                     <ul>
                         {sizes.map((size, index) => <li key={size} onClick={() => {
                             setActiveSize(index)
-                        }} className={activeSize === index ? 'active' : ''}>{size} см.</li>)}
+                        }}
+                                                        className={activeSize === index ? 'active' : ''}>{size} см.</li>)}
                     </ul>
                 </div>
                 <div className=" pizza-block__bottom">
                     <div className=" pizza-block__price">от {price} ₽</div>
-                    <button onClick={onClickAdd} className=" button button--outline button--add">
+                    <button onClick={onClickAdd}
+                            className=" button button--outline button--add">
                         <svg
                             width="12"
                             height="12"

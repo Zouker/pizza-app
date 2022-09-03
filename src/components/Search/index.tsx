@@ -1,18 +1,20 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import {useAppDispatch} from '../../redux/store';
 import {setSearchValue} from '../../redux/slices/filterSlice';
 
-export const Search = () => {
+export const Search: React.FC = () => {
     const dispatch = useAppDispatch()
     const [value, setValue] = React.useState('')
-    const inputRef = React.useRef<any>()
+    const inputRef = React.useRef<HTMLInputElement>(null)
 
-    const onClickClear = () => {
+    const onClickClear = (event: React.MouseEvent<SVGSVGElement>) => {
         dispatch(setSearchValue(''))
         setValue('');
-        inputRef.current.focus();
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
     }
 
     const updateSearchValue = React.useCallback(debounce((str: string) => {
@@ -21,7 +23,7 @@ export const Search = () => {
         []
     );
 
-    const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value)
         updateSearchValue(event.target.value)
     }
@@ -53,7 +55,8 @@ export const Search = () => {
                 className={styles.input}
                 placeholder={'Поиск пиццы...'}/>
             {value && (
-                <svg onClick={onClickClear} className={styles.clearIcon} height="512px" id="Layer_1"
+                <svg onClick={onClickClear} className={styles.clearIcon} height="512px"
+                     id="Layer_1"
                      version="1.1" viewBox="0 0 512 512" width="512px"
                      xmlns="http://www.w3.org/2000/svg"
                 >
