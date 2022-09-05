@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/pizza-app/static/css/main.09dc301b.css",
-    "main.js": "/pizza-app/static/js/main.7ad6eb12.js",
+    "main.css": "/pizza-app/static/css/main.d800e04d.css",
+    "main.js": "/pizza-app/static/js/main.23880778.js",
     "static/js/787.3d66f7fd.chunk.js": "/pizza-app/static/js/787.3d66f7fd.chunk.js",
     "static/media/empty-cart.png": "/pizza-app/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/pizza-logo.svg": "/pizza-app/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
     "index.html": "/pizza-app/index.html",
-    "main.09dc301b.css.map": "/pizza-app/static/css/main.09dc301b.css.map",
-    "main.7ad6eb12.js.map": "/pizza-app/static/js/main.7ad6eb12.js.map",
+    "main.d800e04d.css.map": "/pizza-app/static/css/main.d800e04d.css.map",
+    "main.23880778.js.map": "/pizza-app/static/js/main.23880778.js.map",
     "787.3d66f7fd.chunk.js.map": "/pizza-app/static/js/787.3d66f7fd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.09dc301b.css",
-    "static/js/main.7ad6eb12.js"
+    "static/css/main.d800e04d.css",
+    "static/js/main.23880778.js"
   ]
 }
