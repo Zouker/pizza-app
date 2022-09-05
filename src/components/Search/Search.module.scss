@@ -1,6 +1,10 @@
 .root {
   position: relative;
   left: -120px;
+
+  @media screen and (max-width: 1310px) {
+    left: 0;
+  }
 }
 
 .icon {
@@ -21,6 +25,10 @@
 
   &:focus {
     border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 330px;
   }
 }
 
