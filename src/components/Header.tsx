@@ -22,7 +22,7 @@ export const Header = () => {
                         </div>
                     </div>
                 </Link>
-                <Search/>
+                {location.pathname !== '/cart' && <Search/>}
                 <div className="header__cart">
                     {location.pathname !== '/cart' && (
                         <Link to="/cart" className="button button--cart">
