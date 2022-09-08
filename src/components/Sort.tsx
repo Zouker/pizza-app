@@ -1,17 +1,22 @@
 import React from 'react'
 import {useAppDispatch} from '../redux/store';
 import {setSort} from '../redux/filter/slice';
-import {Sort, SortPropertyEnum} from '../redux/filter/types';
+import {Sort as SortType, SortPropertyEnum} from '../redux/filter/types';
+
+type SortItem = {
+    name: string
+    sortProperty: SortPropertyEnum
+}
 
 type PopupClick = MouseEvent & {
     path: Node[]
 }
 
 type SortPopupProps = {
-    value: Sort
+    value: SortType
 }
 
-export const sortList: Sort[] = [
+export const sortList: SortItem[] = [
     {name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC},
     {name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC},
     {name: 'цене (DESC)', sortProperty: SortPropertyEnum.PRICE_DESC},
@@ -20,12 +25,12 @@ export const sortList: Sort[] = [
     {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC},
 ]
 
-export const SortPopup: React.FC<SortPopupProps> = React.memo(({value}) => {
+export const Sort: React.FC<SortPopupProps> = React.memo(({value}) => {
     const dispatch = useAppDispatch()
     const sortRef = React.useRef<HTMLDivElement>(null)
     const [open, setOpen] = React.useState(false)
 
-    const onClickListItem = (obj: Sort) => {
+    const onClickListItem = (obj: SortItem) => {
         dispatch(setSort(obj))
         setOpen(false)
     }

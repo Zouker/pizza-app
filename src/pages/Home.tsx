@@ -1,9 +1,5 @@
 import React from 'react';
-import {Categories} from '../components/Categories';
-import {SortPopup} from '../components/Sort';
-import {Skeleton} from '../components/PizzaBlock/Skeleton';
-import {PizzaBlock} from '../components/PizzaBlock';
-import {Pagination} from '../components/Pagination';
+import {Categories, Pagination, PizzaBlock, Skeleton, Sort} from '../components';
 import {setCategoryId, setCurrentPage} from '../redux/filter/slice';
 import {useAppDispatch, useAppSelector} from '../redux/store';
 import {useNavigate} from 'react-router-dom';
@@ -99,7 +95,7 @@ export const Home: React.FC = () => {
                     value={categoryId}
                     onChangeCategory={onChangeCategory}
                 />
-                <SortPopup value={sort}/>
+                <Sort value={sort}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {
